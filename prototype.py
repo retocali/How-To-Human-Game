@@ -1,3 +1,5 @@
+from random import randint
+
 dateStuff = ["run","cry","fight"]
 sleepStuff = ["sleep","dream"]
 
@@ -63,6 +65,7 @@ combos.update({ ("dream", "talk", x)   : ("You sleeptalk about " + gerundOfword(
 
 static_combos = {
     # Two Input
+<<<<<<< HEAD
     ("run", "work")    : "You go to work",
     ("work", "run")    : "You quit your job",
     ("eat", "fight")   : "You start a food fight",
@@ -72,8 +75,21 @@ static_combos = {
     ("fight", "talk")  : "You fight but decide to talk it out",
     ("browse", "fights") : "You get into a heated argument through Facebook",
     ("sleep", "wake")  : "You take a nap",
+=======
+    ("run", "work")     : "You go to work",
+    ("work", "run")     : "You quit your job",
+    ("work", "browse")  : "You go on reddit and pretend to do work",
+    ("eat", "fight")    : "You start a food fight",
+    ("browse", "smile") : "You find some dank memes",
+    ("fight", "run")    : "You run away from a fight",
+    ("cry", "talk")     : "You cry but decide to talk it out",
+    ("fight", "talk")   : "You fight but decide to talk it out",
+    ("browse", "fights"): "You get into a heated argument through Facebook",
+>>>>>>> 516d73b5a113ff8aa3912bac06d939b6cd7aa5b5
 
     #Adjacent but no order ones
+    ("eat", "wake")    : "You wake up, trying to eat your pillow",
+    ("wake", "eat")    : "You wake up, trying to eat your pillow",
     ("browse", "flirt"): "You decide to go on Tinder",
     ("flirt", "browse"): "You decide to go on Tinder",
     ("browse", "talk") : "You go on social media",
@@ -87,6 +103,10 @@ static_combos = {
     ("sleep" , "wake", "work") : "You're late for work",
     ("work" , "fight", "run")  : "You're fired from work",
     ("work" , "sleep", "wake") : "You pull all-nighter",
+
+    # Random Ones
+    ("work", "flirt") : "You flirt with your " + "coworker" if randint(0,5) > 2 else "boss"
+    
 
 }
 
