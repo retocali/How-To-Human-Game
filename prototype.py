@@ -1,4 +1,5 @@
 dateStuff = ["run","cry","fight"]
+sleepStuff = ["sleep","dream"]
 
 def gerundOfword(x):
     # Gives the -ing for of a word
@@ -39,7 +40,8 @@ words = set([
     "work", 
     "sleep",
     "dream",
-    "browse"
+    "browse",
+    "end"
 ])
 combos = {}
 
@@ -53,7 +55,10 @@ combos.update({ ("smile", x)   : ("You smile about " + gerundOfword(x)) for x in
 combos.update({("sleep" , x, "wake") : "You dream about " + gerundOfword(x)  for x in words})
 
 combos.update({ ("flirt", "eat", x)   : ("Your date got ruined") for x in dateStuff})
+combos.update({ (x, "run")   : ("You sleepwalk") for x in sleepStuff})
 
+combos.update({ ("sleep", "talk", x)   : ("You sleeptalk about " + gerundOfword(x)) for x in sleepStuff})
+combos.update({ ("dream", "talk", x)   : ("You sleeptalk about " + gerundOfword(x)) for x in sleepStuff})
 
 
 static_combos = {
@@ -66,7 +71,7 @@ static_combos = {
     ("cry", "talk")    : "You cry but decide to talk it out",
     ("fight", "talk")  : "You fight but decide to talk it out",
     ("browse", "fights") : "You get into a heated argument through Facebook",
-
+    ("sleep", "wake")  : "You take a nap",
 
     #Adjacent but no order ones
     ("browse", "flirt"): "You decide to go on Tinder",
@@ -75,6 +80,8 @@ static_combos = {
     ("talk", "browse") : "You go on social media",
     ("flirt", "eat")   : "You go on a date",
     ("eat", "flirt")   : "You go on a date",
+    ("sleep", "cry")   : "You cry yourself to sleep",
+    ("cry", "sleep")   : "You cry yourself to sleep",
     
     # Three Input
     ("sleep" , "wake", "work") : "You're late for work",
@@ -98,10 +105,14 @@ while True:
     # Take in user input
     user = input(str(count)+":");
     if user in words:
+        if user == "end":
+            parse(response)
+            break
         words.remove(user)
         print(words)
         response.append(user)
         count+=1;
+
     else:
         print("Not in list")
     # End and show players their story
