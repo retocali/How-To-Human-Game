@@ -1,5 +1,6 @@
 from random import randint
 dateStuff = ["run","cry","fight"]
+sleepStuff = ["sleep","dream"]
 
 def gerundOfword(x):
     # Gives the -ing for of a word
@@ -48,20 +49,24 @@ combos.update({ ("smile", x)   : ("You smile because you are " + gerundOfword(x)
 combos.update({("sleep" , x, "wake") : "You dream about " + gerundOfword(x)  for x in words})
 
 combos.update({ ("flirt", "eat", x)   : ("Your date got ruined") for x in dateStuff})
+combos.update({ (x, "run")   : ("You sleepwalk") for x in sleepStuff})
 
+combos.update({ ("sleep", "talk", x)   : ("You sleeptalk about " + gerundOfword(x)) for x in sleepStuff})
+combos.update({ ("dream", "talk", x)   : ("You sleeptalk about " + gerundOfword(x)) for x in sleepStuff})
 
 
 static_combos = {
     # Two Input
-    ("run", "work")     : "You go to work",
-    ("work", "run")     : "You quit your job",
+    ("run", "work")    : "You go to work",
+    ("work", "run")    : "You quit your job",
+    ("eat", "fight")   : "You start a food fight",
     ("work", "browse")  : "You go on reddit and pretend to do work",
-    ("eat", "fight")    : "You start a food fight",
-    ("browse", "smile") : "You find some dank memes",
-    ("fight", "run")    : "You run away from a fight",
-    ("cry", "talk")     : "You cry but decide to talk it out",
-    ("fight", "talk")   : "You fight but decide to talk it out",
-    ("browse", "fights"): "You get into a heated argument through Facebook",
+    ("browse", "smile"): "You find some dank memes",
+    ("fight", "run")   : "You run away from a fight",
+    ("cry", "talk")    : "You cry but decide to talk it out",
+    ("fight", "talk")  : "You fight but decide to talk it out",
+    ("browse", "fights") : "You get into a heated argument through Facebook",
+    ("sleep", "wake")  : "You take a nap",
 
     #Adjacent but no order ones
     ("eat", "wake")    : "You wake up, trying to eat your pillow",
@@ -72,6 +77,8 @@ static_combos = {
     ("talk", "browse") : "You go on social media",
     ("flirt", "eat")   : "You go on a date",
     ("eat", "flirt")   : "You go on a date",
+    ("sleep", "cry")   : "You cry yourself to sleep",
+    ("cry", "sleep")   : "You cry yourself to sleep",
     
     # Three Input
     ("sleep" , "wake", "work") : "You're late for work",
@@ -101,10 +108,14 @@ while True:
     # Take in user input
     user = input(str(count)+":");
     if user in words:
+        if user == "end":
+            parse(response)
+            break
         words.remove(user)
         print("Words Left:",words)
         response.append(user)
         count+=1;
+
     else:
         print("Not in list\n")
     # End and show players their story
