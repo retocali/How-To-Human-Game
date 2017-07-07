@@ -1,3 +1,4 @@
+dateStuff = ["run","cry","fight"]
 
 words = set([
     "flirt", 
@@ -24,26 +25,35 @@ combos.update({ ("smile", x)   : ("You smile about " + x) for x in words})
 
 combos.update({("sleep" , x, "wake") : "You dream about " + gerundOfword(x)  for x in words})
 
+combos.update({ ("flirt", "eat", x)   : ("Your date got ruined") for x in dateStuff})
+
 
 
 static_combos = {
     # Two Input
-    ("run", "work")    : "You went to work",
+    ("run", "work")    : "You go to work",
     ("work", "run")    : "You quit your job",
     ("eat", "fight")   : "You have a food fight",
     ("browse", "smile"): "You find some dank memes",
-    ("fight", "run")   : "You ran away from a fight",
+    ("fight", "run")   : "You run away from a fight",
     ("cry", "talk")    : "You cry but decide to talk it out",
     ("fight", "talk")  : "You fight but decide to talk it out",
+    ("browse", "fights") : "You get into a heated argument through Facebook",
+
+
+    #Adjacent but no order ones
     ("browse", "flirt"): "You decide to go on Tinder",
     ("flirt", "browse"): "You decide to go on Tinder",
     ("browse", "talk") : "You go on social media",
     ("talk", "browse") : "You go on social media",
+    ("flirt", "eat")   : "You go on a date",
+    ("eat", "flirt")   : "You go on a date",
     
     # Three Input
     ("sleep" , "wake", "work") : "You're late for work",
-    ("work" , "fight", "run") : "You're fired from work",
+    ("work" , "fight", "run")  : "You're fired from work",
     ("work" , "sleep", "wake") : "You pull all-nighter",
+
 }
 combos.update(static_combos)
 
@@ -51,7 +61,7 @@ combos.update(static_combos)
 def parse(words):
     for i in range(len(words)-1):
         # Check two 
-        elif (words[i], words[i+1]) in combos:
+        if (words[i], words[i+1]) in combos:
             print(combos[(words[i], words[i+1])])
         # Check three
         elif (i == len(words)-2):
