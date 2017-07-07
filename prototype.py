@@ -1,5 +1,4 @@
 from random import randint
-
 dateStuff = ["run","cry","fight"]
 
 def gerundOfword(x):
@@ -30,18 +29,12 @@ def parse(words):
 
 
 words = set([
-    "flirt", 
-    "eat", 
-    "smile", 
-    "talk", 
-    "fight", 
-    "cry", 
-    "wake", 
-    "run", 
-    "work", 
-    "sleep",
-    "dream",
-    "browse"
+    "flirt",      "eat", 
+    "smile",     "talk", 
+    "fight",      "cry", 
+     "wake",      "run", 
+     "work",    "sleep",
+    "dream",   "browse",
 ])
 combos = {}
 
@@ -50,7 +43,7 @@ combos.update({ (x, "cry")     : ("You %s, resulting in crying")  % x for x in w
 combos.update({ (x, "smile")   : ("You %s, resulting in smiling") % x for x in words})
 
 combos.update({ ("dream", x)   : ("You dream about " + gerundOfword(x)) for x in words})
-combos.update({ ("smile", x)   : ("You smile about " + gerundOfword(x)) for x in words})
+combos.update({ ("smile", x)   : ("You smile because you are " + gerundOfword(x)) for x in words})
 
 combos.update({("sleep" , x, "wake") : "You dream about " + gerundOfword(x)  for x in words})
 
@@ -88,7 +81,6 @@ static_combos = {
     # Random Ones
     ("work", "flirt") : "You flirt with your " + "coworker" if randint(0,5) > 2 else "boss"
     
-
 }
 
 non_adjacent_combos = {
@@ -101,18 +93,22 @@ combos.update(static_combos)
 
 response = []
 count = 1
-print(words)
+print("\n Welcome to How to Human\n"+"-"*25,"\n\n - Please Select 10 words\n   to see how well you can\n   make your day\n")
+
+print("Words Left:",words)
+
 while True:
     # Take in user input
     user = input(str(count)+":");
     if user in words:
         words.remove(user)
-        print(words)
+        print("Words Left:",words)
         response.append(user)
         count+=1;
     else:
-        print("Not in list")
+        print("Not in list\n")
     # End and show players their story
-    if len(words) == 0:
+    if len(response) == 10:
+        print("\n Story \n-------")
         parse(response)
         break;
