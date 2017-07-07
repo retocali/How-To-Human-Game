@@ -1,4 +1,31 @@
 
+def gerundOfword(x):
+    # Gives the -ing for of a word
+    return x[:-1]+(x[-1] if x[-1] != 'e' else '') +"ing"
+
+
+def parse(words):
+    first_part = set()
+    for i in range(len(words)):
+        # Check for non-adjacent combos
+        if words[i] in non_adjacent_combos:
+            first_part.add(words[i])
+        for word in first_part:
+            if non_adjacent_combos[word][0] == words[i]:
+                print(non_adjacent_combos[word][1])
+        # Check for two inputs
+        if (i == len(words)-1):
+            continue # To avoid an index out of range error
+        if (words[i], words[i+1]) in combos:
+            print(combos[(words[i], words[i+1])])
+        # Check for three inputs
+        elif (i == len(words)-2):
+            continue # To avoid an index out of range error
+        elif (words[i], words[i+1], words[i+2]) in combos:
+            print(combos[(words[i], words[i+1], words[i+2])])
+
+
+
 words = set([
     "flirt", 
     "eat", 
@@ -19,8 +46,8 @@ combos = {}
 combos.update({ (x, "cry")     : ("You %s, resulting in crying")  % x for x in words})
 combos.update({ (x, "smile")   : ("You %s, resulting in smiling") % x for x in words})
 
-combos.update({ ("dream", x)   : ("You dream about " + x) for x in words})
-combos.update({ ("smile", x)   : ("You smile about " + x) for x in words})
+combos.update({ ("dream", x)   : ("You dream about " + gerundOfword(x)) for x in words})
+combos.update({ ("smile", x)   : ("You smile about " + gerundOfword(x)) for x in words})
 
 combos.update({("sleep" , x, "wake") : "You dream about " + gerundOfword(x)  for x in words})
 
@@ -28,13 +55,16 @@ combos.update({("sleep" , x, "wake") : "You dream about " + gerundOfword(x)  for
 
 static_combos = {
     # Two Input
-    ("run", "work")    : "You went to work",
+    
+    ("run", "work")    : "You go to work",
     ("work", "run")    : "You quit your job",
-    ("eat", "fight")   : "You have a food fight",
+    ("eat", "fight")   : "You start a food fight",
     ("browse", "smile"): "You find some dank memes",
-    ("fight", "run")   : "You ran away from a fight",
+    ("fight", "run")   : "You run away from a fight",
     ("cry", "talk")    : "You cry but decide to talk it out",
     ("fight", "talk")  : "You fight but decide to talk it out",
+
+    # Adjacent but no order ones
     ("browse", "flirt"): "You decide to go on Tinder",
     ("flirt", "browse"): "You decide to go on Tinder",
     ("browse", "talk") : "You go on social media",
@@ -43,25 +73,15 @@ static_combos = {
     # Three Input
     ("sleep" , "wake", "work") : "You're late for work",
     ("work" , "fight", "run") : "You're fired from work",
-    ("work" , "sleep", "wake") : "You pull all-nighter",
+    ("work" , "sleep", "wake") : "You pull an all-nighter",
+}
+
+non_adjacent_combos = {
+   # First  >  Second = Result
+    "sleep" : ("wake", "It was all a dream")
+
 }
 combos.update(static_combos)
-
-
-def parse(words):
-    for i in range(len(words)-1):
-        # Check two 
-        elif (words[i], words[i+1]) in combos:
-            print(combos[(words[i], words[i+1])])
-        # Check three
-        elif (i == len(words)-2):
-            continue # To avoid an index out of range error
-        elif (words[i], words[i+1], words[i+2]) in combos:
-            print(combos[(words[i], words[i+1], words[i+2])])
-    
-def gerundOfword(x):
-    # Gives the -ing for of a word
-    return x[:-1]+(x[-1] if x[-1] != 'e' else '') +"ing"
 
 
 response = []
