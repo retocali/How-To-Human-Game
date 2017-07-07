@@ -1,5 +1,5 @@
 
-words = [
+words = set([
     "flirt", 
     "eat", 
     "smile", 
@@ -12,21 +12,21 @@ words = [
     "sleep",
     "dream",
     "browse"
-]
+])
 combos = {}
 
 # Variable Inputs
-combos.update({(x, "cry")     : "You %s, resulting in crying"  % x for x in words})
-combos.update({(x, "smile")   : "You %s, resulting in smiling" % x for x in words})
+combos.update({ (x, "cry")     : ("You %s, resulting in crying")  % x for x in words})
+combos.update({ (x, "smile")   : ("You %s, resulting in smiling") % x for x in words})
 
-combos.update({("dream", x)   : "You dream about " + x for x in words})
-combos.update({("smile", x)   : "You smile about " + x for x in words})
+combos.update({ ("dream", x)   : ("You dream about " + x) for x in words})
+combos.update({ ("smile", x)   : ("You smile about " + x) for x in words})
 
-combos.update({("sleep" , x, "wake") : "You dream about doing " + x for x in words})
+combos.update({("sleep" , x, "wake") : "You dream about " + gerundOfword(x)  for x in words})
+
+
 
 static_combos = {
-    # One Input
-    "dream" : "Dreams about ",
     # Two Input
     ("run", "work")    : "You went to work",
     ("work", "run")    : "You quit your job",
@@ -47,35 +47,37 @@ static_combos = {
 }
 combos.update(static_combos)
 
-    
-
 
 def parse(words):
     for i in range(len(words)-1):
-        # Check one
-        if words[i] in combos:
-            print(combos[words[i]]+words[i+1])
         # Check two 
         elif (words[i], words[i+1]) in combos:
             print(combos[(words[i], words[i+1])])
         # Check three
         elif (i == len(words)-2):
-            continue
+            continue # To avoid an index out of range error
         elif (words[i], words[i+1], words[i+2]) in combos:
             print(combos[(words[i], words[i+1], words[i+2])])
     
+def gerundOfword(x):
+    # Gives the -ing for of a word
+    return x[:-1]+(x[-1] if x[-1] != 'e' else '') +"ing"
 
 
 response = []
 count = 1
 print(words)
 while True:
+    # Take in user input
     user = input(str(count)+":");
     if user in words:
+        words.remove(user)
+        print(words)
         response.append(user)
         count+=1;
-    elif user == 'q':
-        parse(response)    
-        break;
     else:
         print("Not in list")
+    # End and show players their story
+    if len(words) == 0:
+        parse(response)
+        break;
