@@ -55,8 +55,6 @@ words = set([
     "dream",   "browse",
 ])
 
-
-
 def setup():
     # Single Inputs
     singles = {
@@ -104,6 +102,12 @@ def setup():
         ("browse", "fights") : "You get into a heated argument through Facebook with your "+persons[personCount],
         ("sleep", "wake")  : "You take a nap at " + places[placeCount],
         ("dream", "wake")  : "You wake up from a nightmare",
+        ("work", "eats")  : "You eat at your desk",
+        ("cry", "work")    : "You get frustrated during work and start crying.",
+        ("run", "smile")   : "You feel good because you're exercising",
+        ("sleep", "dream") : "You fell asleep and are beginning to dream",
+        ("browse", "eat")  : "You order interesting food online from Grubhub"
+        
 
         #Adjacent but no order ones
         ("eat", "wake")    : "You wake up, trying to eat your pillow",
@@ -116,11 +120,14 @@ def setup():
         ("eat", "flirt")   : "You go on a date with your "+persons[personCount],
         ("sleep", "cry")   : "You cry yourself to sleep",
         ("cry", "sleep")   : "You cry yourself to sleep",
+        ("cry", "smile")   : "You cry tears of joy",
+        ("smile", "cry")   : "You cry tears of joy",
+    
         
         # Three Input
         ("sleep" , "wake", "work") : "You're late for work",
         ("work" , "fight", "run")  : "You're fired from work",
-        ("work" , "sleep", "wake") : "You pull all-nighter",
+        ("work" , "sleep", "wake") : "You pull an all-nighter",
 
         
     }
@@ -136,7 +143,7 @@ def setup():
 
 response = []
 count = 1
-print("\n Welcome to How to Human\n"+"-"*25,"\n\n - Please Select 10 words\n   to see how well you can\n   make your day\n")
+print("\n Welcome to How to Human\n"+"-"*25,"\n\n - Please Select 10 words\n   to see how well you can\n   make your day.\n")
 
 print("Words Left:",words)
 
