@@ -67,6 +67,11 @@ static_combos = {
     ("fight", "talk")  : "You fight but decide to talk it out",
     ("browse", "fights") : "You get into a heated argument through Facebook",
     ("sleep", "wake")  : "You take a nap",
+    ("work", "eats")  : "You have lunch at work",
+    ("cry", "work")    : "You get frustrated during work and start crying.",
+    ("run", "smile")   : "You feel good because you're exercising",
+    ("sleep", "dream") : "You fell asleep and are beginning to dream",
+    
 
     #Adjacent but no order ones
     ("eat", "wake")    : "You wake up, trying to eat your pillow",
@@ -79,6 +84,10 @@ static_combos = {
     ("eat", "flirt")   : "You go on a date",
     ("sleep", "cry")   : "You cry yourself to sleep",
     ("cry", "sleep")   : "You cry yourself to sleep",
+    ("cry", "smile")   : "You cry tears of joy",
+    ("smile", "cry")   : "You cry tears of joy",
+    ("run" , "fight")  : "You get into a fight on the streets",
+    ("fight" , "run")  : "You get into a fight on the streets",
     
     # Three Input
     ("sleep" , "wake", "work") : "You're late for work",
@@ -95,12 +104,13 @@ non_adjacent_combos = {
     "sleep" : ("wake", "You wake up and realize, it was all a dream")
 
 }
+
 combos.update(static_combos)
 
 
 response = []
 count = 1
-print("\n Welcome to How to Human\n"+"-"*25,"\n\n - Please Select 10 words\n   to see how well you can\n   make your day\n")
+print("\n Welcome to How to Human\n"+"-"*25,"\n\n - Please Select 10 words\n   to see how well you can\n   make your day.\n")
 
 print("Words Left:",words)
 
