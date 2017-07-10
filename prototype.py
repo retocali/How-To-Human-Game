@@ -19,6 +19,7 @@ def parse(words):
     
     singles, combos, non_adjacent_combos = setup(personCount, placeCount);
     first_part = set()
+    phrases = []
     for i in range(len(words)):
         # Update persons and places
         placeCount  = (placeCount  + singles.get(words[i])[1][0]) % len(places)
@@ -26,34 +27,28 @@ def parse(words):
         singles, combos, non_adjacent_combos = setup(personCount, placeCount);
 
         # Single Inputs
-        print(singles.get(words[i], "")[0])
+        phrases.append(singles.get(words[i], "")[0])
 
         # Check for non-adjacent combos
         if words[i] in non_adjacent_combos:
             first_part.add(words[i])
         for word in first_part:
             if non_adjacent_combos[word][0] == words[i]:
-                print(non_adjacent_combos[word][1])
+                phrases.append(non_adjacent_combos[word][1])
 
         # Check for two inputs
         if (i == len(words)-1):
             continue # To avoid an index out of range error
-        print(combos.get((words[i], words[i+1]), ""))
+        phrases.append(combos.get((words[i], words[i+1]), ""))
 
         # Check for three inputs
         if (i == len(words)-2):
             continue # To avoid an index out of range error
-        print(combos.get((words[i], words[i+1], words[i+2]), ""))
+        phrases.append(combos.get((words[i], words[i+1], words[i+2]), ""))
+    return phrases
         
 
-words = set([
-    "flirt",      "eat", 
-    "smile",     "talk", 
-    "fight",      "cry", 
-     "wake",      "run", 
-     "work",    "sleep",
-    "dream",   "browse",
-])
+
 
 
     
@@ -146,14 +141,29 @@ def setup(personCount, placeCount):
     combos.update(static_combos)
     return singles, combos, non_adjacent_combos
 
+def reset():
+    response = []
+    count = 1
+    words = set([
+        "flirt",      "eat", 
+        "smile",     "talk", 
+        "fight",      "cry", 
+        "wake",      "run", 
+        "work",    "sleep",
+        "dream",   "browse",
+    ])
+    print("\n Welcome to How to Human\n"+"-"*25,"\n\n - Please type in 10 words\n   to see if you can\n   get the following line:\n")
+    print("Line: ",random_line, "\n")
+    print("Words Left:",words)
+    return response, count, words
 
-response = []
-count = 1
-print("\n Welcome to How to Human\n"+"-"*25,"\n\n - Please Select 10 words\n   to see how well you can\n   make your day.\n")
 
-print("Words Left:",words)
 
-while True:
+random_line = "You decide to go on Tinder"
+done = False
+response, count, words = reset()
+
+while not done:
     # Take in user input
     user = input(str(count)+":");
     if user in words:
@@ -170,5 +180,15 @@ while True:
     # End and show players their story
     if len(response) == 10:
         print("\n Story \n-------")
-        parse(response)
-        break;
+        phrases = parse(response)
+        for line in phrases:
+            print(line)
+            if random_line == line:
+                done = True
+                
+        if not done:
+            print("Try again")
+            response, count, words = reset()
+        else:
+            print("-"*12,"\n- You win! -\n"+("-"*12))
+        
