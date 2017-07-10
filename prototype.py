@@ -149,7 +149,7 @@ def setup(personCount, placeCount):
 
 response = []
 count = 1
-print("\n Welcome to How to Human\n"+"-"*25,"\n\n - Please Select 10 words\n   to see how well you can\n   make your day.\n")
+print("\n Welcome to 'How to Human'\n"+"-"*25,"\n\n - Please select 10 words\n   to see how well you can\n   make your day.\n Press enter after typing each word.\n Certain sequences create specific events.")
 
 print("Words Left:",words)
 
