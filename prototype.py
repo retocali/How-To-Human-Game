@@ -65,7 +65,7 @@ def setup(personCount, placeCount):
     #   word    : standard output                         change in places/persons
         "flirt" : ("You flirt with your " + persons[personCount],  (0,0)),
         "smile" : ("You smile with your " + persons[personCount],  (0,0)),
-        "fight" : ("You get mad at your " + persons[personCount],(0,1)),
+        "fight" : ("You get mad at your " + persons[personCount],  (0,1)),
         "wake"  : ("Your eyes start to open",                      (0,0)),
         "work"  : ("You work with your " + persons[personCount],   (1,1)),
         "dream" : ("You dream about random things for a while",    (0,0)),
@@ -109,12 +109,12 @@ def setup(personCount, placeCount):
         ("work", "eats")   : "You eat at your desk",
         ("cry", "work")    : "You get frustrated during work and start crying.",
         ("run", "smile")   : "You feel good because you're exercising",
-        ("sleep", "dream") : "You fell asleep and are beginning to dream",
+        ("sleep", "dream") : "You fall asleep and are beginning to dream",
         ("browse", "eat")  : "You order interesting food online from Grubhub",
         ("dream", "cry")   : "You have a nightmare and feel scared",
 
 
-        #Adjacent but no order ones
+        # Adjacent but no order ones
         ("eat", "wake")    : "You are trying to eat your pillow in your sleep",
         ("wake", "eat")    : "You are trying to eat your pillow in your sleep",
         ("browse", "flirt"): "You decide to go on Tinder",
@@ -127,8 +127,8 @@ def setup(personCount, placeCount):
         ("cry", "sleep")   : "You cry yourself to sleep",
         ("cry", "smile")   : "You cry tears of joy",
         ("smile", "cry")   : "You cry tears of joy",
-        ("smile", "fight") : "You playfight",
-        ("fight", "smile") : "You playfight",
+        ("smile", "fight") : "You playfight with "+persons[personCount],
+        ("fight", "smile") : "You playfight with "+persons[personCount],
         
         # Three Input
         ("sleep" , "wake", "work") : "You're late for work",
