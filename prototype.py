@@ -63,18 +63,18 @@ def setup(personCount, placeCount):
     # Single Inputs
     singles = {
     #   word    : standard output                         change in places/persons
-        "flirt" : ("You flirt with your " + persons[personCount], (0,0)),
-        "smile" : ("You smile with your " + persons[personCount], (0,1)),
-        "fight" : ("You fight with your " + persons[personCount], (0,1)),
-        "wake"  : ("You wake up",                                 (0,0)),
-        "work"  : ("You work with your " + persons[personCount],  (1,1)),
-        "dream" : ("You dream about random things for a while",   (0,0)),
-        "eat"   : ("You are eating at " + places[placeCount],     (0,0)),
-        "talk"  : ("You talk with your " + persons[personCount],  (0,0)),
-        "cry"   : ("You are crying",                              (0,0)),
-        "run"   : ("You run to " + places[placeCount],            (1,0)),
-        "sleep" : ("You sleep at " + places[placeCount],          (0,0)),
-        "browse": ("You go on the internet",                      (0,0))
+        "flirt" : ("You flirt with your " + persons[personCount],  (0,0)),
+        "smile" : ("You smile with your " + persons[personCount],  (0,0)),
+        "fight" : ("You get mad at your " + persons[personCount],(0,1)),
+        "wake"  : ("Your eyes start to open",                      (0,0)),
+        "work"  : ("You work with your " + persons[personCount],   (1,1)),
+        "dream" : ("You dream about random things for a while",    (0,0)),
+        "eat"   : ("You are eating at " + places[placeCount],      (0,0)),
+        "talk"  : ("You talk with your " + persons[personCount],   (0,0)),
+        "cry"   : ("Tears start to fall down your face",           (0,0)),
+        "run"   : ("You run to " + places[placeCount],             (1,1)),
+        "sleep" : ("You sleep at " + places[placeCount],           (0,0)),
+        "browse": ("You go on the internet",                       (0,0))
     }
     
     # Variable Inputs
@@ -98,15 +98,15 @@ def setup(personCount, placeCount):
         ("run", "work")    : "You go to work",
         ("work", "run")    : "You quit your job",
         ("eat", "fight")   : "You start a food fight",
-        ("work", "browse")  : "You go on reddit and pretend to do work",
+        ("work", "browse") : "You go on reddit and pretend to do work",
         ("browse", "smile"): "You find some dank memes",
         ("fight", "run")   : "You run away from a fight with your "+persons[personCount] + " to " + places[placeCount],
         ("cry", "talk")    : "You cry but decide to talk it out with your "+persons[personCount],
         ("fight", "talk")  : "You fight but decide to talk it out with your "+persons[personCount],
-        ("browse", "fights") : "You get into a heated argument through Facebook with your "+persons[personCount],
+        ("browse", "fights"):"You get into a heated argument through Facebook with your "+persons[personCount],
         ("sleep", "wake")  : "You take a nap at " + places[placeCount],
         ("dream", "wake")  : "You wake up from a nightmare",
-        ("work", "eats")  : "You eat at your desk",
+        ("work", "eats")   : "You eat at your desk",
         ("cry", "work")    : "You get frustrated during work and start crying.",
         ("run", "smile")   : "You feel good because you're exercising",
         ("sleep", "dream") : "You fell asleep and are beginning to dream",
@@ -115,8 +115,8 @@ def setup(personCount, placeCount):
 
 
         #Adjacent but no order ones
-        ("eat", "wake")    : "You wake up, trying to eat your pillow",
-        ("wake", "eat")    : "You wake up, trying to eat your pillow",
+        ("eat", "wake")    : "You are trying to eat your pillow in your sleep",
+        ("wake", "eat")    : "You are trying to eat your pillow in your sleep",
         ("browse", "flirt"): "You decide to go on Tinder",
         ("flirt", "browse"): "You decide to go on Tinder",
         ("browse", "talk") : "You go on social media",
