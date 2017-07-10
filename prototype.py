@@ -1,13 +1,12 @@
 from random import randint
 
+
 dateStuff = ["run","cry","fight"]
 sleepStuff = ["sleep","dream"]
 
 persons = ["significant other", "boss", "coworker"]
 places  = ["your home", "your workplace", "the streets", "a restaurant"]
 
-personCount = 0
-placeCount = 0
 
 def gerundOfword(x):
     # Gives the -ing for of a word
@@ -15,13 +14,16 @@ def gerundOfword(x):
 
 
 def parse(words):
+    personCount = 0
+    placeCount = 0
     
+    singles, combos, non_adjacent_combos = setup(personCount, placeCount);
     first_part = set()
     for i in range(len(words)):
         # Update persons and places
-        placeCount  += singles.get(words[i])[1][0]
-        personCount += singles.get(words[i])[1][1]
-        singles, combos, non_adjacent_combos = setup();
+        placeCount  = (placeCount  + singles.get(words[i])[1][0]) % len(places)
+        personCount = (personCount + singles.get(words[i])[1][1]) % len(persons)
+        singles, combos, non_adjacent_combos = setup(personCount, placeCount);
 
         # Single Inputs
         print(singles.get(words[i], "")[0])
@@ -55,7 +57,7 @@ words = set([
     "dream",   "browse",
 ])
 
-def setup():
+def setup(personCount, placeCount):
     # Single Inputs
     singles = {
     #   word    : standard output                         change in places/persons
@@ -106,7 +108,7 @@ def setup():
         ("cry", "work")    : "You get frustrated during work and start crying.",
         ("run", "smile")   : "You feel good because you're exercising",
         ("sleep", "dream") : "You fell asleep and are beginning to dream",
-        ("browse", "eat")  : "You order interesting food online from Grubhub"
+        ("browse", "eat")  : "You order interesting food online from Grubhub",
         
 
         #Adjacent but no order ones
