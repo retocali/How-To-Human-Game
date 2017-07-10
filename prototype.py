@@ -152,7 +152,7 @@ def reset():
         "work",    "sleep",
         "dream",   "browse",
     ])
-    print("\n Welcome to How to Human\n"+"-"*25,"\n\n - Please type in 10 words\n   to see if you can\n   get the following line:\n")
+    print("\n Welcome to How to Human\n"+"-"*25,"\n\n - Please type in 10 words\n Press enter after typing each word.\n   to see if you can\n   get the following line:\n")
     print("Line: ",random_line, "\n")
     print("Words Left:",words)
     return response, count, words
@@ -164,6 +164,14 @@ done = False
 response, count, words = reset()
 
 while not done:
+
+response = []
+count = 1
+print("\n Welcome to 'How to Human'\n"+"-"*25,"\n\n - Please select 10 words\n   to see how well you can\n   make your day.\n Press enter after typing each word.\n Certain sequences create specific events.")
+
+print("Words Left:",words)
+
+while True:
     # Take in user input
     user = input(str(count)+":");
     if user in words:
