@@ -92,7 +92,7 @@ static_combos = {
 
 non_adjacent_combos = {
    # First  >  Second = Result
-    "sleep" : ("wake", "It was all a dream")
+    "sleep" : ("wake", "You wake up and realize, it was all a dream")
 
 }
 combos.update(static_combos)
