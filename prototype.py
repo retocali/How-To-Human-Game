@@ -71,7 +71,8 @@ static_combos = {
     ("cry", "work")    : "You get frustrated during work and start crying.",
     ("run", "smile")   : "You feel good because you're exercising",
     ("sleep", "dream") : "You fell asleep and are beginning to dream",
-    ("browse", "eat")  : "You order interesting food online from Grubhub"
+    ("browse", "eat")  : "You order interesting food online from Grubhub",
+    ("dream", "cry")   : "You have a nightmare and feel scared",
     
 
     #Adjacent but no order ones
@@ -89,6 +90,9 @@ static_combos = {
     ("smile", "cry")   : "You cry tears of joy",
     ("run" , "fight")  : "You get into a fight on the streets",
     ("fight" , "run")  : "You get into a fight on the streets",
+    ("smile", "fight") : "You playfight",
+    ("fight", "smile") : "You playfight",
+    
     
     # Three Input
     ("sleep" , "wake", "work") : "You're late for work",
