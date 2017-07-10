@@ -71,6 +71,7 @@ static_combos = {
     ("cry", "work")    : "You get frustrated during work and start crying.",
     ("run", "smile")   : "You feel good because you're exercising",
     ("sleep", "dream") : "You fell asleep and are beginning to dream",
+    ("browse", "eat")  : "You order interesting food online from Grubhub"
     
 
     #Adjacent but no order ones
