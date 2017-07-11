@@ -164,7 +164,9 @@ def setup(person_count, area_count, object_count):
         ("wake","talk")    : "You wake up to your phone ringing from " +persons[person_count],
         ("wake","work")    : "You are late to work! Gotta rush!",
         ("wake","sleep")   : "The alarm started pounding and you pushed it off ... ...",
+        ("wake","browse")  : "As you groggily wake up, you browse through your phone and it drops onto your sleepy face.",
         ("eat","run")      : "You vomit all that you ate.",
+        ("dream","run")    : "Someone has been running all over your mind. Who though?",
         
         # Adjacent but no order ones
         ("eat", "wake")    : "You find yourself eating your pillow.",
@@ -181,6 +183,12 @@ def setup(person_count, area_count, object_count):
         ("smile", "fight") : "You playfight with "+persons[person_count]+".",
         ("fight", "smile") : "You playfight with "+persons[person_count]+".",
         ("eat", "sleep")   : "You have a midnight snack and binge eat.",
+        ("flirt","run")    : "You have a good run with your " +persons[personCount] + ".",
+        ("run","flirt")    : "You have a good run with your " +persons[personCount] + ".",
+
+        ("cry", "run")     : "You run away from your problem.",
+        ("run", "cry")     : "You run away from your problem.",
+
         
         # Three Input
         ("work" , "fight", "run"  ) : "You're fired from work",
