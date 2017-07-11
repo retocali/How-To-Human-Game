@@ -9,7 +9,7 @@ areas   = ["your home", "your workplace", "the streets", "a restaurant"]
 objects = []
 
 def gerundOfword(x):
-    # Gives the -ing for of a word
+    # Gives the -ing form of a word
     return x[:-1]+(x[-1] if x[-1] != 'e' else '') +"ing"
 
 
@@ -41,7 +41,7 @@ def parse(words):
         singles, combos, non_adjacent_combos = setup(p, a);
 
         # Single Inputs
-        phrases.append(current_time+singles.get(words[i], "")[0])
+        phrases.append(singles.get(words[i], "")[0])
 
         # Check for non-adjacent combos
         if words[i] in non_adjacent_combos:
@@ -60,13 +60,16 @@ def parse(words):
             continue # To avoid an index out of range error
         phrases.append(combos.get((words[i], words[i+1], words[i+2]), ""))
     return phrases
+        
 
+
+
+
+    
 
 
 def setup(personCount, placeCount):
     # Single Inputs
-    p = personCount
-    a = placeCount
     singles = {
     #   word    : standard output                         change in areas/persons
         "flirt" : ("You flirt with your " + persons[personCount],  ( a , p )),
@@ -87,14 +90,15 @@ def setup(personCount, placeCount):
     combos = {}
     combos.update({ (x, "cry")     : ("You %s, resulting in you crying")  % x for x in words})
     combos.update({ (x, "smile")   : ("You %s, resulting in you smiling") % x for x in words})
-    combos.update({ (x, "run")   : ("You sleepwalk") for x in sleepStuff})
 
     combos.update({ ("dream", x)   : ("You dream about " + gerundOfword(x)) for x in words})
     combos.update({ ("smile", x)   : ("You smile because you are " + gerundOfword(x)) for x in words})
 
     combos.update({("sleep" , x, "wake") : "You dream about " + gerundOfword(x)  for x in words})
 
-    combos.update({ ("flirt", "eat" , x)   : ("Your date got ruined") for x in dateStuff})
+    combos.update({ ("flirt", "eat", x)   : ("Your date got ruined") for x in dateStuff})
+    combos.update({ (x, "run")   : ("You sleepwalk") for x in sleepStuff})
+
     combos.update({ ("sleep", "talk", x)   : ("You sleeptalk about " + gerundOfword(x)) for x in sleepStuff})
     combos.update({ ("dream", "talk", x)   : ("You sleeptalk about " + gerundOfword(x)) for x in sleepStuff})
 
@@ -126,14 +130,14 @@ def setup(personCount, placeCount):
         ("flirt", "browse"): "You decide to go on Tinder",
         ("browse", "talk") : "You go on social media",
         ("talk", "browse") : "You go on social media",
-        ("flirt", "eat")   : "You go on a date with your " + persons[personCount],
-        ("eat", "flirt")   : "You go on a date with your " + persons[personCount],
+        ("flirt", "eat")   : "You go on a date with your "+persons[personCount],
+        ("eat", "flirt")   : "You go on a date with your "+persons[personCount],
         ("sleep", "cry")   : "You cry yourself to sleep",
         ("cry", "sleep")   : "You cry yourself to sleep",
         ("cry", "smile")   : "You cry tears of joy",
         ("smile", "cry")   : "You cry tears of joy",
-        ("smile", "fight") : "You playfight with " + persons[personCount],
-        ("fight", "smile") : "You playfight with " + persons[personCount],
+        ("smile", "fight") : "You playfight with "+persons[personCount],
+        ("fight", "smile") : "You playfight with "+persons[personCount],
         
         # Three Input
         ("sleep" , "wake", "work") : "You're late for work",
@@ -153,7 +157,7 @@ def setup(personCount, placeCount):
 
 def reset():
     response = []
-    count = 6
+    count = 1
     words = set([
         "flirt",      "eat", 
         "smile",     "talk", 
@@ -168,7 +172,7 @@ def reset():
 
 
 
-random_line = "You're fired from work"
+random_line = "You decide to go on Tinder"
 done = False
 response, count, words = reset()
 
@@ -193,7 +197,7 @@ while not done:
         words.remove(user)
         
         response.append(user)
-        count += 2;
+        count+=1;
 
     else:
         print("Not in list\n")
@@ -205,9 +209,9 @@ while not done:
             print(line)
             if random_line == line:
                 done = True
-        print("-"*10)
+                
         if not done:
-            print("\nThe line was not found\nTry again")
+            print("Try again")
             response, count, words = reset()
         else:
             print("-"*12,"\n- You win! -\n"+("-"*12))
