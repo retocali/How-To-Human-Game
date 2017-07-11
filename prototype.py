@@ -23,16 +23,16 @@ def parse(words):
     first_part = set()
     phrases = []
     for i in range(len(words)):
+        
         # Calculate Time
-        current_time = ""
         if (time % 12 == 0):
-            current_time += "12:00"
+            current_time = 12
         else:
-            current_time += str(time % 12)+":00"
+            current_time = time % 12
         if (time//12):
-            current_time += "PM: "
+            ending = "PM: "
         else:
-            current_time += "AM: "
+            ending = "AM: "
         time += 2
         
 
@@ -41,24 +41,28 @@ def parse(words):
         singles, combos, non_adjacent_combos = setup(p, a, o);
 
         # Single Inputs
-        phrases.append(singles.get(words[i], "")[0])
+        single_time = str(current_time)+":00"+ending
+        phrases.append(single_time+singles.get(words[i], "")[0])
 
         # Check for non-adjacent combos
         if words[i] in non_adjacent_combos:
             first_part.add(words[i])
         for word in first_part:
             if non_adjacent_combos[word][0] == words[i]:
-                phrases.append(non_adjacent_combos[word][1])
+                phrases.append("6:00AM: "+non_adjacent_combos[word][1])
+                time = 6 # Since the only non-adjacent was it was all a dream
 
         # Check for two inputs
         if (i == len(words)-1):
             continue # To avoid an index out of range error
-        phrases.append(combos.get((words[i], words[i+1]), ""))
+        double_time = "    "+str(current_time)+":45"+ending
+        phrases.append(double_time+combos.get((words[i], words[i+1]), ""))
 
         # Check for three inputs
         if (i == len(words)-2):
             continue # To avoid an index out of range error
-        phrases.append(combos.get((words[i], words[i+1], words[i+2]), ""))
+        triple_time = "        "+str(current_time+1)+":30"+ending
+        phrases.append(triple_time+combos.get((words[i], words[i+1], words[i+2]), ""))
     return phrases
         
 
@@ -209,7 +213,8 @@ while not done:
         print("\n Story \n-------")
         phrases = parse(response)
         for line in phrases:
-            print(line)
+            if line[-1] != ' ': # The line is empty
+                print(line)
             if random_line == line:
                 done = True
                 
