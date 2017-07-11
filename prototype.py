@@ -246,3 +246,5 @@ while not done:
         else:
             print("-"*12,"\n- You win! -\n"+("-"*12))
         
+class Event:
+    def __init__(triggers, phrase, personCount, areaCount, objectCount):
