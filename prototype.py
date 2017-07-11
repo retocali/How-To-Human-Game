@@ -13,16 +13,16 @@ titles = {
                 "You decide to go on Tinder.", 
                 "Your casual conversation with your boss turns into a steaming hot talk.",
                 "Your casual conversation with your coworker turns into a steaming hot talk.",
-                ("You flirt with your boss","You sleep at your workplace"),
-                ("You flirt with your coworker", "You sleep at your workplace"),
-                "You go on a date with your boss",
-                "You go on a date with your coworker"
+                ("You flirt with your boss.","You sleep at your workplace."),
+                ("You flirt with your coworker.", "You sleep at your workplace."),
+                "You go on a date with your boss.",
+                "You go on a date with your coworker."
         },
         "Bum" : {
             "You quit your job.", 
             "You're fired from work",
-            "You run to the streets", 
-            "You sleep at the streets",
+            "You run to the streets.", 
+            "You sleep at the streets.",
         }
         # "Hero",
         # "Average Joe",
