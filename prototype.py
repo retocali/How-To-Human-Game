@@ -36,7 +36,6 @@ def parse(words):
     first_part = set()
     phrases = []
     for i in range(len(words)):
-        
         # Calculate Time
         if (time % 12 == 0):
             current_time = 12
@@ -44,17 +43,18 @@ def parse(words):
             current_time = time % 12
         if (time//12):
             ending = "PM: "
-        else:
+        else: 
             ending = "AM: "
         time += 2
         
 
         # Update persons and areas
         a, p, o = singles.get(words[i])[1]
+        
         singles, combos, non_adjacent_combos = setup(p, a, o);
 
         # Single Inputs
-        single_time = str(current_time)+":00"+ending
+        single_time = str(current_time)+":00"+ending+": "
         phrases.append(single_time+singles.get(words[i], "")[0])
 
         # Check for non-adjacent combos
@@ -77,13 +77,13 @@ def parse(words):
         # Check for two inputs
         if (i == len(words)-1):
             continue # To avoid an index out of range error
-        double_time = "    "+str(current_time)+":45"+ending
+        double_time = "    "+str(current_time)+":45"+ending+": "
         phrases.append(double_time+combos.get((words[i], words[i+1]), ""))
 
         # Check for three inputs
         if (i == len(words)-2):
             continue # To avoid an index out of range error
-        triple_time = "        "+str(current_time+1)+":30"+ending
+        triple_time = "    "*2+str(current_time+1)+":30"+ending+": "
         phrases.append(triple_time+combos.get((words[i], words[i+1], words[i+2]), ""))
     return phrases
 
@@ -146,13 +146,16 @@ def setup(personCount, areaCount, objectcount):
         ("dream", "cry")   : "You have a nightmare and feel scared"+".",
         ("talk", "flirt")  : "Your casual conversation with your " +persons[personCount] + "turns into a steaming hot talk.",
         ("run","talk")     : "You exercise with your " +persons[personCount] +".",
-        ("run", "cry")     : "You fall down while running and lose your " + objects[objectcount]+".",
-        ("run", "fight")   : "You chase after a mugger that stole your " + objects[objectcount]+".",
-        ("browse", "dream"): "You start to search for a new " + objects[objectcount]+"on Amazon.",
-
+        ("wake","flirt")   : "You wake up and ardpee happy to see bae.",
+        ("wake","smile")   : "It is a lovely day.",
+        ("wake","cry")     : "You wake up feeling awful.",
+        ("wake","talk")    : "You wake up to your phone ringing from " +persons[personCount],
+        ("wake","work")    : "You are late to work! Gotta rush!",
+        ("wake","sleep")   : "The alarm started pounding and you pushed it off ... ...",
+        ("eat","run")      : "You vomit all that you ate.",
+        
         # Adjacent but no order ones
         ("eat", "wake")    : "You find yourself eating your pillow.",
-        ("wake", "eat")    : "You find yourself eating your pillow.",
         ("browse", "flirt"): "You decide to go on Tinder"+".",
         ("flirt", "browse"): "You decide to go on Tinder"+".",
         ("browse", "talk") : "You go on social media"+".",
@@ -165,6 +168,7 @@ def setup(personCount, areaCount, objectcount):
         ("smile", "cry")   : "You cry tears of joy"+".",
         ("smile", "fight") : "You playfight with "+persons[personCount]+".",
         ("fight", "smile") : "You playfight with "+persons[personCount]+".",
+        ("eat", "sleep")   : "You have a midnight snack and binge eat.",
         
         # Three Input
         ("sleep", "wake" , "work" ) : "You're late for work",
@@ -173,6 +177,14 @@ def setup(personCount, areaCount, objectcount):
         ("run"  , "fight", "cry"  ) : "The mugger gets away as you despair.",
         ("run"  , "fight", "talk" ) : "You lose the mugger, but you find the police and file a report.",
         ("run"  , "fight", "smile") : "You catch up to the mugger and take back your " + objects[objectcount] + ".",
+        ("sleep" , "wake", "work") : "You're late for work",
+        ("work" , "fight", "run")  : "You're fired from work",
+        ("work" , "sleep", "wake") : "You pull an all-nighter",
+
+        ("eat"  , "cry" , "sleep") : "You binge eat and cry yourself to sleep over " +persons[personCount],       
+        ("cry"  , "eat" , "sleep") : "You binge eat and cry yourself to sleep over " +persons[personCount],       
+        ("eat"  , "sleep" , "cry") : "You binge eat and cry yourself to sleep over " +persons[personCount],       
+        ("eat"  , "sleep" , "cry") : "You binge eat and cry yourself to sleep over " +persons[personCount],       
     }
     
 
@@ -248,3 +260,4 @@ while not done:
         
 class Event:
     def __init__(triggers, phrase, personCount, areaCount, objectCount):
+        pass
