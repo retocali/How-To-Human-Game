@@ -23,16 +23,16 @@ def parse(words):
     first_part = set()
     phrases = []
     for i in range(len(words)):
-        
         # Calculate Time
+        current_time = ""
         if (time % 12 == 0):
-            current_time = 12
+            current_time += "12:00"
         else:
-            current_time = time % 12
+            current_time += str(time % 12)+":00"
         if (time//12):
-            ending = "PM: "
+            current_time += "PM: "
         else:
-            ending = "AM: "
+            current_time += "AM: "
         time += 2
         
 
@@ -41,28 +41,24 @@ def parse(words):
         singles, combos, non_adjacent_combos = setup(p, a, o);
 
         # Single Inputs
-        single_time = str(current_time)+":00"+ending
-        phrases.append(single_time+singles.get(words[i], "")[0])
+        phrases.append(singles.get(words[i], "")[0])
 
         # Check for non-adjacent combos
         if words[i] in non_adjacent_combos:
             first_part.add(words[i])
         for word in first_part:
             if non_adjacent_combos[word][0] == words[i]:
-                phrases.append("6:00AM: "+non_adjacent_combos[word][1])
-                time = 6 # Since the only non-adjacent was it was all a dream
+                phrases.append(non_adjacent_combos[word][1])
 
         # Check for two inputs
         if (i == len(words)-1):
             continue # To avoid an index out of range error
-        double_time = "    "+str(current_time)+":45"+ending
-        phrases.append(double_time+combos.get((words[i], words[i+1]), ""))
+        phrases.append(combos.get((words[i], words[i+1]), ""))
 
         # Check for three inputs
         if (i == len(words)-2):
             continue # To avoid an index out of range error
-        triple_time = "        "+str(current_time+1)+":30"+ending
-        phrases.append(triple_time+combos.get((words[i], words[i+1], words[i+2]), ""))
+        phrases.append(combos.get((words[i], words[i+1], words[i+2]), ""))
     return phrases
         
 
@@ -130,7 +126,16 @@ def setup(personCount, areaCount, objectcount):
         ("dream", "cry")   : "You have a nightmare and feel scared"+".",
         ("talk", "flirt")  : "Your casual conversation with your " +persons[personCount] + "turns into a steaming hot talk.",
         ("run","talk")     : "You exercise with your " +persons[personCount] +".",
-
+        ("eat","sleep")    : "You feel exhausted and get into a food coma.",
+        ("wake","run")     : "You go for a wake-up jog.",
+        ("wake","flirt")   : "You wake up and ardpee happy to see bae.",
+        ("wake","smile")   : "It is a lovely day.",
+        ("wake","cry")     : "You wake up feeling awful."
+        ("wake","talk")    : "You wake up to your phone ringing from " +persons[personCount],
+        ("wake","work")    : "You are late to work! Gotta rush!",
+        ("wake","sleep")   : "The alarm started pounding and you pushed it off ... ...",
+        ("eat","run")      : "You vomit all that you ate.",
+        
         # Adjacent but no order ones
         ("eat", "wake")    : "You find yourself eating your pillow.",
         ("wake", "eat")    : "You find yourself eating your pillow.",
@@ -146,13 +151,19 @@ def setup(personCount, areaCount, objectcount):
         ("smile", "cry")   : "You cry tears of joy"+".",
         ("smile", "fight") : "You playfight with "+persons[personCount]+".",
         ("fight", "smile") : "You playfight with "+persons[personCount]+".",
+        ("eat", "sleep")   : "You have a midnight snack and binge eat.",
         
         # Three Input
         ("sleep" , "wake", "work") : "You're late for work",
         ("work" , "fight", "run")  : "You're fired from work",
         ("work" , "sleep", "wake") : "You pull an all-nighter",
 
-        
+        ("eat"  , "cry" , "sleep") : "You binge eat and cry over yourself to sleep over " +persons[personCount],       
+        ("cry"  , "eat" , "sleep") : "You binge eat and cry over yourself to sleep over " +persons[personCount],       
+
+        ("eat"  , "sleep" , "cry") : "You binge eat and cry over yourself to sleep over " +persons[personCount],       
+
+        ("eat"  , "sleep" , "cry") : "You binge eat and cry over yourself to sleep over " +persons[personCount],       
     }
 
     non_adjacent_combos = {
@@ -214,8 +225,7 @@ while not done:
         print("\n Story \n-------")
         phrases = parse(response)
         for line in phrases:
-            if line[-1] != ' ': # The line is empty
-                print(line)
+            print(line)
             if random_line == line:
                 done = True
                 
