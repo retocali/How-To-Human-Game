@@ -161,7 +161,7 @@ def reset():
         "work",    "sleep",
         "dream",   "browse",
     ])
-    print("\n Welcome to How to Human\n"+"-"*25,"\n\n - Please type in 10 words\n Press enter after typing each word.\n   to see if you can\n   get the following line:\n")
+    print("\n Welcome to How to Human\n"+"-"*25,"\n\n - Please type in 10 words\n   to see if you can\n   get the following line:\n\n Press enter after typing each word.")
     print("Line: ",random_line, "\n")
     print("Words Left:",words)
     return response, count, words
