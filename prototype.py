@@ -5,8 +5,8 @@ dateStuff = ["run","cry","fight"]
 sleepStuff = ["sleep","dream"]
 
 persons = ["significant other", "boss", "coworker"]
-places  = ["your home", "your workplace", "the streets", "a restaurant"]
-
+areas   = ["your home", "your workplace", "the streets", "a restaurant"]
+objects = []
 
 def gerundOfword(x):
     # Gives the -ing for of a word
@@ -14,11 +14,12 @@ def gerundOfword(x):
 
 
 def parse(words):
-    personCount = 0
-    placeCount = 0
+    p = 0 # personCount
+    a = 0 # areaCount
+    o = 0 # objectcount
 
     time = 6
-    singles, combos, non_adjacent_combos = setup(personCount, placeCount);
+    singles, combos, non_adjacent_combos = setup(p, a);
     first_part = set()
     phrases = []
     for i in range(len(words)):
@@ -35,9 +36,9 @@ def parse(words):
         time += 2
         
 
-        # Update persons and places
-        placeCount, personCount = singles.get(words[i])[1]
-        singles, combos, non_adjacent_combos = setup(personCount, placeCount);
+        # Update persons and areas
+        a, p = singles.get(words[i])[1]
+        singles, combos, non_adjacent_combos = setup(p, a);
 
         # Single Inputs
         phrases.append(current_time+singles.get(words[i], "")[0])
@@ -67,18 +68,18 @@ def setup(personCount, placeCount):
     p = personCount
     a = placeCount
     singles = {
-    #   word    : standard output                         change in places/persons
+    #   word    : standard output                         change in areas/persons
         "flirt" : ("You flirt with your " + persons[personCount],  ( a , p )),
         "smile" : ("You smile with your " + persons[personCount],  ( a , p )),
         "fight" : ("You get mad at your " + persons[personCount],  ( a ,p+1)),
         "wake"  : ("Your eyes start to open",                      ( a , p )),
         "work"  : ("You work with your " + persons[personCount],   ( 2 , p )),
         "dream" : ("You dream about random things for a while",    ( a , p )),
-        "eat"   : ("You are eating at " + places[placeCount],      ( a , p )),
+        "eat"   : ("You are eating at " + areas[placeCount],       ( a , p )),
         "talk"  : ("You talk with your " + persons[personCount],   ( a , p )),
         "cry"   : ("Tears start to fall down your face",           ( a , p )),
-        "run"   : ("You run to " + places[placeCount],             (a+1,p+1)),
-        "sleep" : ("You sleep at " + places[placeCount],           ( a , p )),
+        "run"   : ("You run to " + areas[placeCount],              (a+1,p+1)),
+        "sleep" : ("You sleep at " + areas[placeCount],            ( a , p )),
         "browse": ("You go on the internet",                       ( a , p ))
     }
     
@@ -104,11 +105,11 @@ def setup(personCount, placeCount):
         ("eat", "fight")   : "You start a food fight",
         ("work", "browse") : "You go on reddit and pretend to do work",
         ("browse", "smile"): "You find some dank memes",
-        ("fight", "run")   : "You run away from a fight with your " + persons[personCount] + " to " + places[placeCount],
+        ("fight", "run")   : "You run away from a fight with your " + persons[personCount] + " to " + areas[placeCount],
         ("cry", "talk")    : "You cry but decide to talk it out with your " + persons[personCount],
         ("fight", "talk")  : "You fight but decide to talk it out with your " + persons[personCount],
         ("browse", "fights"):"You get into a heated argument through Facebook with your " + persons[personCount],
-        ("sleep", "wake")  : "You take a nap at " + places[placeCount],
+        ("sleep", "wake")  : "You take a nap at " + areas[placeCount],
         ("dream", "wake")  : "You wake up from a nightmare",
         ("work", "eats")   : "You eat at your desk",
         ("cry", "work")    : "You get frustrated during work and start crying.",
@@ -161,9 +162,8 @@ def reset():
         "work",    "sleep",
         "dream",   "browse",
     ])
-    print("\n Welcome to How to Human\n"+"-"*25,"\n\n - Please type in 10 words\n   to see if you can\n   get the following line:\n\n Press enter after typing each word.")
+    print("\n Welcome to How to Human\n"+"-"*25,"\n\n - Please type in 10 words\n   Press enter after typing\n   each word. to see if you\n   can get the following line:\n")
     print("Line: ",random_line, "\n")
-    print("Words Left:",words)
     return response, count, words
 
 
@@ -173,6 +173,7 @@ done = False
 response, count, words = reset()
 
 while not done:
+    
     current_time = ""
     if (count % 12 == 0):
         current_time += "12:00"
@@ -183,13 +184,14 @@ while not done:
     else:
         current_time += "AM: "
     # Take in user input
+    print("Words Left:",words)
     user = input(current_time);
     if user in words:
         if user == "end":
             parse(response)
             break
         words.remove(user)
-        print("Words Left:",words)
+        
         response.append(user)
         count += 2;
 
