@@ -144,20 +144,12 @@ def setup(person_count, area_count, object_count):
         ("eat", "fight")   : "You start a food fight.",
         ("work", "browse") : "You go on reddit and pretend to do work.",
         ("browse", "smile"): "You find some dank memes.",
-<<<<<<< HEAD
         ("fight", "run")   : "You run away from a fight with your " + persons[personCount] + " to " + areas[areaCount] +".",
         ("cry", "talk")    : "You cry but decide to talk it out with your " + persons[personCount]+".",
-        ("run", "cry")     : "While you were running, you tripped and cracked your phone screen. RIP. *sobs*"
+        ("run", "cry")     : "While you were running, you tripped and cracked your phone screen. RIP. *sobs*",
         ("fight", "talk")  : "You fight but decide to talk it out with your " + persons[personCount]+".",
         ("browse", "fight"):"You get into a heated argument through Facebook with your " + persons[personCount]+".",
         ("sleep", "wake")  : "You take a nap at " + areas[areaCount]+".",
-=======
-        ("fight", "run")   : "You run away from a fight with your " + persons[person_count] + " to " + areas[area_count] +".",
-        ("cry", "talk")    : "You cry but decide to talk it out with your " + persons[person_count]+".",
-        ("fight", "talk")  : "You fight but decide to talk it out with your " + persons[person_count]+".",
-        ("browse", "fight"):"You get into a heated argument through Facebook with your " + persons[person_count]+".",
-        ("sleep", "wake")  : "You take a nap at " + areas[area_count]+".",
->>>>>>> 534f0769f46743ffd7bc58cbc657dbe5513f7f0c
         ("dream", "wake")  : "You wake up from a nightmare"+".",
         ("work", "eat")    : "You eat at your desk since you have a lot of work to do.",
         ("cry", "work")    : "You get frustrated during work and start crying."+".",
@@ -165,12 +157,8 @@ def setup(person_count, area_count, object_count):
         ("sleep", "dream") : "You fall asleep and are beginning to dream"+".",
         ("browse", "eat")  : "You order interesting food online from Grubhub"+".",
         ("dream", "cry")   : "You have a nightmare and feel scared"+".",
-<<<<<<< HEAD
-        ("run","talk")     : "You exercise with your " +persons[personCount] +".",
-=======
         ("talk", "flirt")  : "Your casual conversation with your " +persons[person_count] + "turns into a steaming hot talk.",
         ("run","talk")     : "You exercise with your " +persons[person_count] +".",
->>>>>>> 534f0769f46743ffd7bc58cbc657dbe5513f7f0c
         ("wake","flirt")   : "You wake up and ardpee happy to see bae.",
         ("wake","smile")   : "It is a lovely day.",
         ("wake","cry")     : "You wake up feeling awful.",
@@ -218,14 +206,10 @@ def setup(person_count, area_count, object_count):
         ("cry", "sleep")   : "You cry yourself to sleep"+".",
         ("cry", "smile")   : "You cry tears of joy"+".",
         ("smile", "cry")   : "You cry tears of joy"+".",
-<<<<<<< HEAD
-        ("smile", "fight") : "You playfight with "+persons[personCount]+".",
-        ("fight", "smile") : "You playfight with "+persons[personCount]+".",
-=======
+
         ("smile", "fight") : "You playfight with "+persons[person_count]+".",
         ("fight", "smile") : "You playfight with "+persons[person_count]+".",
-        ("eat", "sleep")   : "You have a midnight snack and binge eat.",
->>>>>>> 534f0769f46743ffd7bc58cbc657dbe5513f7f0c
+
         ("flirt","run")    : "You have a good run with your " +persons[personCount] + ".",
         ("run","flirt")    : "You have a good run with your " +persons[personCount] + ".",
         ("cry","work")     : "You are upset over work.",
@@ -349,10 +333,6 @@ while not done:
         
 
 class Event:
-<<<<<<< HEAD
-    def __init__(triggers, phrase, personCount, areaCount, objectCount):
-        pass
-=======
     def __init__(triggers, phrase, person_change, area_change, object_change, good_change):
         self.triggers = triggers
         self.phrase = phrase
@@ -368,4 +348,3 @@ class Event:
             good_count += self.good_change
         return person_count, area_count, object_count, good_count   
         
->>>>>>> 534f0769f46743ffd7bc58cbc657dbe5513f7f0c
