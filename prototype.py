@@ -19,7 +19,7 @@ def parse(words):
     o = 0 # objectcount
 
     time = 6
-    singles, combos, non_adjacent_combos = setup(p, a);
+    singles, combos, non_adjacent_combos = setup(p, a, o);
     first_part = set()
     phrases = []
     for i in range(len(words)):
@@ -37,8 +37,8 @@ def parse(words):
         
 
         # Update persons and areas
-        a, p = singles.get(words[i])[1]
-        singles, combos, non_adjacent_combos = setup(p, a);
+        a, p, o = singles.get(words[i])[1]
+        singles, combos, non_adjacent_combos = setup(p, a, o);
 
         # Single Inputs
         phrases.append(singles.get(words[i], "")[0])
@@ -68,22 +68,25 @@ def parse(words):
     
 
 
-def setup(personCount, placeCount):
+def setup(personCount, areaCount, objectcount):
     # Single Inputs
+    a = areaCount
+    p = personCount
+    o = objectcount
     singles = {
-    #   word    : standard output                         change in areas/persons
-        "flirt" : ("You flirt with your " + persons[personCount],  ( a , p )),
-        "smile" : ("You smile with your " + persons[personCount],  ( a , p )),
-        "fight" : ("You get mad at your " + persons[personCount],  ( a ,p+1)),
-        "wake"  : ("Your eyes start to open",                      ( a , p )),
-        "work"  : ("You work with your " + persons[personCount],   ( 2 , p )),
-        "dream" : ("You dream about random things for a while",    ( a , p )),
-        "eat"   : ("You are eating at " + areas[placeCount],       ( a , p )),
-        "talk"  : ("You talk with your " + persons[personCount],   ( a , p )),
-        "cry"   : ("Tears start to fall down your face",           ( a , p )),
-        "run"   : ("You run to " + areas[placeCount],              (a+1,p+1)),
-        "sleep" : ("You sleep at " + areas[placeCount],            ( a , p )),
-        "browse": ("You go on the internet",                       ( a , p ))
+    #   word    : standard output                         new   areas|persons|objects
+        "flirt" : ("You flirt with your " + persons[personCount],  ( a , p , o )),
+        "smile" : ("You smile with your " + persons[personCount],  ( a , p , o )),
+        "fight" : ("You get mad at your " + persons[personCount],  ( a ,p+1, o )),
+        "wake"  : ("Your eyes start to open",                      ( a , p , o )),
+        "work"  : ("You work with your " + persons[personCount],   ( 2 , p , o )),
+        "dream" : ("You dream about random things for a while",    ( a , p , o )),
+        "eat"   : ("You are eating at " + areas[areaCount],        ( a , p , o )),
+        "talk"  : ("You talk with your " + persons[personCount],   ( a , p , o )),
+        "cry"   : ("Tears start to fall down your face",           ( a , p , o )),
+        "run"   : ("You run to " + areas[areaCount],               (a+1,p+1, o )),
+        "sleep" : ("You sleep at " + areas[areaCount],             ( a , p , o )),
+        "browse": ("You go on the internet",                       ( a , p , o ))
     }
     
     # Variable Inputs
@@ -109,11 +112,11 @@ def setup(personCount, placeCount):
         ("eat", "fight")   : "You start a food fight",
         ("work", "browse") : "You go on reddit and pretend to do work",
         ("browse", "smile"): "You find some dank memes",
-        ("fight", "run")   : "You run away from a fight with your " + persons[personCount] + " to " + areas[placeCount],
+        ("fight", "run")   : "You run away from a fight with your " + persons[personCount] + " to " + areas[areaCount],
         ("cry", "talk")    : "You cry but decide to talk it out with your " + persons[personCount],
         ("fight", "talk")  : "You fight but decide to talk it out with your " + persons[personCount],
         ("browse", "fights"):"You get into a heated argument through Facebook with your " + persons[personCount],
-        ("sleep", "wake")  : "You take a nap at " + areas[placeCount],
+        ("sleep", "wake")  : "You take a nap at " + areas[areaCount],
         ("dream", "wake")  : "You wake up from a nightmare",
         ("work", "eats")   : "You eat at your desk",
         ("cry", "work")    : "You get frustrated during work and start crying.",
@@ -157,7 +160,7 @@ def setup(personCount, placeCount):
 
 def reset():
     response = []
-    count = 1
+    count = 6
     words = set([
         "flirt",      "eat", 
         "smile",     "talk", 
@@ -197,7 +200,7 @@ while not done:
         words.remove(user)
         
         response.append(user)
-        count+=1;
+        count += 2;
 
     else:
         print("Not in list\n")
