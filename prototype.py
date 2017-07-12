@@ -149,6 +149,7 @@ def setup(person_count, area_count, object_count):
         ("run", "smile")   : "You feel good because you're exercising"+".",
         ("run", "talk")    : "You exercise with your " +persons[person_count] +".",
         ("run", "cry")     : "While you were running, you tripped and lost your "+objects[object_count],
+        ("run", "fight")   : "While you were running, a mugger stole your "+objects[object_count],
         
         ("work", "run")    : "You quit your job.",
         ("work", "browse") : "You go on reddit while working...",
@@ -238,7 +239,7 @@ def setup(person_count, area_count, object_count):
         ("run"  , "fight", "cry"  ) : "The mugger gets away as you despair.",
         ("run"  , "fight", "talk" ) : "You lose the mugger, but you find the police and file a report.",
         ("run"  , "fight", "smile") : "You catch up to the mugger and take back your " + objects[object_count] + ".",
-        ("sleep" , "wake", "work") : "You're late for work",,
+        ("sleep" , "wake", "work")  : "You're late for work",
 
         ("eat"  , "cry" , "sleep") : "You binge eat and cry yourself to sleep over " +persons[person_count],       
         ("cry"  , "eat" , "sleep") : "You binge eat and cry yourself to sleep over " +persons[person_count],       
