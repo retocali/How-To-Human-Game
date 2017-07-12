@@ -162,7 +162,7 @@ def setup(person_count, area_count, object_count):
         ("eat", "browse")  : "You feel lonely as you eat alone and browse through instagram.",
         
         ("cry", "run")     : "You run away from your problem.",
-        ("cry", "eat")     : "You munch of ice cream and popcorns as you watch movies on Netflix.",
+        ("cry", "eat")     : "You munch on ice cream and popcorns as you watch movies on Netflix.",
         ("cry", "talk")    : "You have a hard time talking to your " +persons[person_count] +" and cry.",
         
         ("dream","smile")  : "Sweet dreams. Ah~",
