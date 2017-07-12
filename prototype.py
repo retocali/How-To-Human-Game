@@ -11,18 +11,18 @@ objects = ["phone", "wallet", "bag"]
 titles = {
         "Cheater" : {
                 "You decide to go on Tinder.", 
-                "Your casual conversation with your boss turns into a steaming hot talk.",
+                "Your casual conversation with your boss turns into a steaming hot talking.",
                 "Your casual conversation with your coworker turns into a steaming hot talk.",
-                ("You flirt with your boss","You sleep at your workplace"),
-                ("You flirt with your coworker", "You sleep at your workplace"),
-                "You go on a date with your boss",
-                "You go on a date with your coworker"
+                ("You flirt with your boss.","You sleep at your workplace."),
+                ("You flirt with your coworker.", "You sleep at your workplace."),
+                "You go on a date with your boss.",
+                "You go on a date with your coworker."
         },
         "Bum" : {
             "You quit your job.", 
             "You're fired from work",
-            "You run to the streets", 
-            "You sleep at the streets",
+            "You run to the streets.", 
+            "You sleep at the streets.",
         }
         # "Hero",
         # "Average Joe",
@@ -107,6 +107,7 @@ def setup(person_count, area_count, object_count):
     o = object_count
     singles = {
     #   word    : standard output                         new   areas|persons|objects
+
         "flirt" : ("You flirt with your " + persons[person_count]+".",  ( a , p , o )),
         "smile" : ("You smile with your " + persons[person_count]+".",  ( a , p , o )),
         "fight" : ("You get mad at your " + persons[person_count]+".",  (a+1,p+1, o )),
@@ -119,6 +120,7 @@ def setup(person_count, area_count, object_count):
         "run"   : ("You run to " + areas[area_count]+".",               (a+1, p , o )),
         "sleep" : ("You sleep at " + areas[area_count]+".",             ( a , p , o )),
         "browse": ("You go on the internet.",                       ( a , p ,o+1))
+
     }
     
     # Variable Inputs
@@ -159,10 +161,10 @@ def setup(person_count, area_count, object_count):
         ("dream", "cry")   : "You have a nightmare and feel scared"+".",
         ("talk", "flirt")  : "Your casual conversation with your " +persons[person_count] + "turns into a steaming hot talk.",
         ("run","talk")     : "You exercise with your " +persons[person_count] +".",
-        ("wake","flirt")   : "You wake up and you are happy to see bae.",
+        ("wake","flirt")   : "You wake up and ardpee happy to see bae.",
         ("wake","smile")   : "It is a lovely day.",
         ("wake","cry")     : "You wake up feeling awful.",
-        ("wake","talk")    : "You wake up to your phone ringing from " +persons[person_count]+".",
+        ("wake","talk")    : "You wake up to your phone ringing from " +persons[person_count],
         ("wake","work")    : "You are late to work! Gotta rush!",
         ("wake","sleep")   : "The alarm started pounding and you pushed it off ... ...",
         ("wake","browse")  : "As you groggily wake up, you browse through your phone and it drops onto your sleepy face.",
@@ -176,16 +178,16 @@ def setup(person_count, area_count, object_count):
         ("sleep","smile")  : "Sweet dreams. Ah~",
         ("dream","smile")  : "Sweet dreams. Ah~",
         ("eat", "sleep")   : "You have a midnight snack and binge eat.",
-        ("cry", "eat")     : "You munch on ice cream and popcorns as you watch movies on Netflix.",
+        ("cry", "eat")     : "You munch of ice cream and popcorns as you watch movies on Netflix.",
         ("browse","sleep") : "You fell asleep while browsing through your phone.",
         ("browse","dream") : "You fantasize over someone you see on social media.",
         ("eat", "browse")  : "You feel lonely as you eat alone and browse through instagram.",
         ("browse","run")   : "You quickly browse through facebook.",
         ("fight","eat")    : "You fight and bite their ears off!",
-        ("fight","sleep")  : "You get knocked out by " +persons[person_count]+".",
-        ("fight", "cry")   : "RIP. Lost a fight against " +persons[person_count]+".",
+        ("fight","sleep")  : "You get knocked out by " +persons[person_count],
+        ("fight", "cry")   : "RIP. Lost a fight against " +persons[person_count],
         ("browse", "smile"): "Haha! You found some dank memes!",
-        ("fight", "smile") : "You get into a playfight with your " +persons[person_count]+".",
+        ("fight", "smile") : "You get into a playfight with your " +persons[person_count],
         ("fight", "talk")  : "Although a fight ensued with your " +persons[person_count] + "you managed to talk it out.",
         ("dream", "wake")  : "'Wow, that was a weird dream...'",
         ("wake", "run")    : "You are running for your dear life---'GASP!' Oh, you just woke.",
