@@ -332,8 +332,9 @@ while not done:
         for line in phrases:
             if line[-1] != ' ': # The line is empty
                 print(line)
-        print("Titles:",match(phrases))
-        if random_title not in match(phrases):
+        earned = match(phrases)
+        print("Titles:",earned if len(earned) > 0 else "None Earned")
+        if random_title not in earned:
             print("-"*14,"\n- Try again -\n"+("-"*14))
             response, count, words = reset()
         else:
