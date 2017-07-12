@@ -112,7 +112,7 @@ def setup(person_count, area_count, object_count):
         "fight" : ("You get mad at your " + persons[person_count]+".",  (a+1,p+1, o )),
         "wake"  : ("Your eyes start to open.",                      ( a , p , o )),
         "work"  : ("You work with your " + persons[person_count]+".",   ( 1 , 1 ,o+1)),
-        "dream" : ("You dream about random things for a while".,    ( a , p , o )),
+        "dream" : ("You dream about random things for a while.",    ( a , p , o )),
         "eat"   : ("You are eating at " + areas[area_count]+".",        ( a , p , o )),
         "talk"  : ("You talk with your " + persons[person_count] +".",   ( a , p , o )),
         "cry"   : ("Tears start to fall down your face.",           ( a , p , o )),
@@ -323,9 +323,8 @@ while not done:
         for line in phrases:
             if line[-1] != ' ': # The line is empty
                 print(line)
-        achieved = match(phrases)
-        print("Titles:",achieved if len(achieved) != 0 else "None")
-        if random_title not in achieved:
+        print("Titles:",match(phrases))
+        if random_title not in match(phrases):
             print("-"*14,"\n- Try again -\n"+("-"*14))
             response, count, words = reset()
         else:
