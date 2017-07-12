@@ -1,15 +1,27 @@
 from random import randint
 
+# How much the user has to type in
+MAX_INPUT_LENGTH = 10
+
+# Used for timing in the day
+START_TIME = 6
+INCREMENT = 2
+HALF_HOUR = 30
+STEP_INCREMENT = 45
 
 dateStuff = ["run","cry","fight"]
 sleepStuff = ["sleep","dream"]
 
+# Various items that are used to make the sentences be more diverse
 persons = ["significant other", "boss", "coworker"]
 areas   = ["your home", "your workplace", "the streets", "a restaurant"]
 objects = ["phone", "wallet", "bag"]
+indent = "    "
 
+# The titles that the player can earn
 titles = {
-        "Cheater" : {
+        "Scarlet Letter" : {
+                # Sentences earn the titles either as a single sentence or tuple of sentences
                 "You decide to go on Tinder.", 
                 "Your casual conversation with your boss turns into a steaming hot talking.",
                 "Your casual conversation with your coworker turns into a steaming hot talk.",
@@ -23,50 +35,37 @@ titles = {
             "You're fired from work",
             "You run to the streets.", 
             "You sleep at the streets.",
+        },
+        "Hero" : {
+            "You catch up to the mugger and take back your phone.",
+            "You catch up to the mugger and take back your wallet.",
+            "You catch up to the mugger and take back your bag."     
         }
-        # "Hero",
-        # "Average Joe",
-        # "Debbie Downer",
-        # "Lucky",
-        # "Traveller",
-        # "Socialite",
-        # "Collector"
 }
 
 def gerundOfword(x):
     # Gives the -ing form of a word
     return x[:-1]+(x[-1] if x[-1] != 'e' else '') + (x[-1] if x[-1] == 'n' else '') +"ing"
 
-
 def parse(words):
     p = 0 # person_count
     a = 0 # area_count
     o = 0 # objectcount
 
-    time = 6
+    time = START_TIME-INCREMENT
     singles, combos, non_adjacent_combos = setup(p, a, o);
     first_part = set()
     phrases = []
+    
     for i in range(len(words)):
-        # Calculate Time
-        if (time % 12 == 0):
-            current_time = 12
-        else:
-            current_time = time % 12
-        if (time//12):
-            ending = "PM"
-        else: 
-            ending = "AM"
-        time += 2
         
-
-        # Update persons and areas
+        time += INCREMENT
+        # Update persons and areas and sentences
         a, p, o = singles.get(words[i])[1]
-        
         singles, combos, non_adjacent_combos = setup(p, a, o);
 
         # Single Inputs
-        single_time = str(current_time)+":00"+ending+": "
+        single_time = give_time(time)
         phrases.append(single_time+singles.get(words[i], "")[0])
 
         # Check for non-adjacent combos
@@ -74,29 +73,24 @@ def parse(words):
             first_part.add((words[i],time))
         for word,prev_time in first_part:
             if non_adjacent_combos[word][0] == words[i]:
-                time = prev_time # Since the only non-adjacent was it was all a dream
-                if (time % 12 == 0):
-                    current_time = 12
-                else:
-                    current_time = time % 12
-                if (time//12):
-                    ending = "PM: "
-                else:
-                    ending = "AM: "
-                phrases.append(str(current_time)+":00"+ending+non_adjacent_combos[word][1])
+                phrases.append(give_time(time, HALF_HOUR)+non_adjacent_combos[word][1])
                 
 
         # Check for two inputs
         if (i == len(words)-1):
             continue # To avoid an index out of range error
-        double_time = "    "+str(current_time)+":45"+ending+": "
+        # Does the next event 45 minutes later
+        double_time = indent+give_time(time, STEP_INCREMENT)
         phrases.append(double_time+combos.get((words[i], words[i+1]), ""))
 
         # Check for three inputs
         if (i == len(words)-2):
             continue # To avoid an index out of range error
-        triple_time = "    "*2+str(current_time+1)+":30"+ending+": "
+        # Does the next event 1:30 minutes later
+        triple_time = indent*2+give_time(time, 2*STEP_INCREMENT)
         phrases.append(triple_time+combos.get((words[i], words[i+1], words[i+2]), ""))
+
+
     return phrases
 
 
@@ -105,8 +99,9 @@ def setup(person_count, area_count, object_count):
     a = area_count
     p = person_count
     o = object_count
+
     singles = {
-    #   word    : standard output                         new   areas|persons|objects
+    #   word    : standard output                                   new areas|persons|objects after using these actions
         "wake"  : ("Your eyes start to open"+".",                          ( a , p , o )),
         "run"   : ("You run to " + areas[area_count]+".",                  (a+1, p , o )),
         "sleep" : ("You sleep at " + areas[area_count]+".",                ( a , p , o )),
@@ -121,7 +116,7 @@ def setup(person_count, area_count, object_count):
         "browse": ("You browse through your " + objects[object_count]+".", ( a , p ,o+1))
     }
     
-    # Variable Inputs
+    # Variable inputs
     combos = {}
     combos.update({ (x, "cry")     : ("You %s, resulting in you crying")  % x for x in words})
     combos.update({ (x, "smile")   : ("You %s, resulting in you smiling") % x for x in words})
@@ -136,6 +131,7 @@ def setup(person_count, area_count, object_count):
 
     combos.update({ ("sleep", "talk", x)   : ("You sleeptalk about " + gerundOfword(x)) for x in sleepStuff})
     combos.update({ ("dream", "talk", x)   : ("You sleeptalk about " + gerundOfword(x)) for x in sleepStuff})
+
 
     static_combos = {
         # Two Input
@@ -249,13 +245,15 @@ def setup(person_count, area_count, object_count):
     
 
     non_adjacent_combos = {
-    # First  >  Second = Result
+        # First >  Second = Result
         "sleep" : ("wake", "You wake up and realize, it was all a dream")
 
     }
     combos.update(static_combos)
     return singles, combos, non_adjacent_combos
+
 def strip(phrase):
+    # Strips whitespace and time from a line
     first = False
     for i in range(len(phrase)):
         if phrase[i] == ":":
@@ -265,23 +263,23 @@ def strip(phrase):
             return phrase[i+2:] 
 
 def match(phrases):
-    # Doubled because their both iterators
-    phrases2 = map(strip,phrases)
-    phrases = map(strip,phrases)
+    # finds titles that match the phrases
     matched = set()
+    # Doubled because their both iterators
+    phrases = list(map(strip,phrases))
     for phrase in phrases:
         for title in titles.keys():
             if phrase in titles[title]:
                 matched.add(title)
-            for second_phrase in phrases2:
+            for second_phrase in phrases:
                 if (phrase, second_phrase) in titles[title]:
                     matched.add(title)
-    return matched
-    
+    return matched 
     
 def reset():
+    # resets the game
     response = []
-    count = 6
+    count = START_TIME
     words = set([
         "flirt",      "eat", 
         "smile",     "talk", 
@@ -292,28 +290,49 @@ def reset():
     ])
     return response, count, words
 
+def give_time(hours, minutes=0):
+    FULL_HOURS = 12
+    current_time = ""
+    hours += minutes // 60
+    minutes %= 60
+    if (hours % FULL_HOURS == 0):
+        current_time += "12"
+    else:
+        current_time += str(hours % FULL_HOURS)
+    current_time += ":"+("00"+str(minutes))[-2:] # Right pad minutes
+    if (hours // FULL_HOURS):
+        current_time += "PM: "
+    else:
+        current_time += "AM: "
+    return current_time
 
 
 random_title = list(titles.keys())[randint(0,len(titles)-1)]
 done = False
 response, count, words = reset()
-print("\n Welcome to How to Human\n"+"-"*25,"\n\n - Please type in 10 words\n   Press enter after typing\n   each word. to see if you\n   can get the following title:\n")
-print("title: ",random_title, "\n")
 
-while not done:
+
+# Instructions
+print("""
+Welcome to How to Human
+-----------------------
+
+  Please type in 10 words
+  Press enter after typing
+  each word in a particular
+  order to see if you can 
+  get the following title:
     
-    current_time = ""
-    if (count % 12 == 0):
-        current_time += "12:00"
-    else:
-        current_time += str(count % 12)+":00"
-    if (count//12):
-        current_time += "PM: "
-    else:
-        current_time += "AM: "
+""")
+print("Title: ",random_title, "\n")
+
+
+# Main input loop
+while not done:
+        
     # Take in user input
     print("Words Left:",words)
-    user = input(current_time);
+    user = input(give_time(count));
     if user in words:
         if user == "end":
             parse(response)
@@ -321,40 +340,38 @@ while not done:
         words.remove(user)
         
         response.append(user)
-        count += 2;
-
+        count += INCREMENT;
     else:
         print("Not in list\n")
+
     # End and show players their story
-    if len(response) == 10:
-        print("\n Story \n-------")
+    if len(response) == MAX_INPUT_LENGTH:
+        print("",
+              " Story ",
+              "-------", sep='\n')
         phrases = parse(response)
+        
+        # Prints all the lines
         for line in phrases:
             if line[-1] != ' ': # The line is empty
                 print(line)
+
+        # Finds the titles and checks
         earned = match(phrases)
-        print("Titles:",earned if len(earned) > 0 else "None Earned")
+        output = str(earned) if len(earned) > 0 else "None Earned"
+        print("|"+"-" * (len(output)+2)+"|")
+        print("| " + output + " |")
+        print("|"+"-" * (len(output)+2)+"|")
+
+        # End Conditions
         if random_title not in earned:
-            print("-"*14,"\n- Try again -\n"+("-"*14))
+            print("|-----------|",
+                  "| Try again |",
+                  "|-----------|", sep= '\n')
             response, count, words = reset()
         else:
             done = True
-            print("-"*12,"\n- You win! -\n"+("-"*12))
-        
-
-class Event:
-    def __init__(triggers, phrase, person_change, area_change, object_change, good_change):
-        self.triggers = triggers
-        self.phrase = phrase
-        self.person_change = person_count
-        self.area_change = area_count
-        self.object_change = object_count
-        self.good_change = good_change
-    def match(words, person_count, area_count, object_count, good_count):
-        if words == trigger:
-            person_count += self.person_change
-            area_count += self.area_change
-            object_count += self.object_change
-            good_count += self.good_change
-        return person_count, area_count, object_count, good_count   
+            print("|----------|",
+                  "| You Win! |",
+                  "|----------|", sep= '\n')
         
